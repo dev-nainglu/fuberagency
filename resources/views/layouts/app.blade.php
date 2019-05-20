@@ -18,9 +18,9 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-  <!-- For Gantt -->
+  <!-- For Gantt
   <script src="{{ asset('js/dhtmlxgantt.js') }}"></script>
-  <link href="{{ asset('css/dhtmlxgantt.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/dhtmlxgantt.css') }}" rel="stylesheet"> -->
 
 </head>
 

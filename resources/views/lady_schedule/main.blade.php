@@ -70,7 +70,7 @@
                                 <td><img src="{{ asset($lady->images[0]->path.$lady->images[0]->name)}}" alt="{{$lady->name}} image" class="lady-img"></td>
                             <?php }else{ ?>
                                 <td><img src="#" alt="" class="lady-img"></td>
-                                <?php } ?>
+                            <?php } ?>
                             @foreach($dates as $date)
                                 <td>
                                     <select name="form-{{$lady->id}}-{{$date}}" id="">
