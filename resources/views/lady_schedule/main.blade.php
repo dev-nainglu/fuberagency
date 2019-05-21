@@ -105,7 +105,7 @@
                                         <option value="23">23:00</option>
                                         <option value="24">24:00</option>
                                     </select> <br/>
-                                    <input type="checkbox" name="check_{{$lady->id}}_{{$date}}" value="{{$lady->id}}_{{$date}}" <?php echo if(isset($active)){echo $active;} ?>>
+                                    <input type="checkbox" name="check_{{$lady->id}}_{{$date}}" value="{{$lady->id}}_{{$date}}" <?php if(isset($active)){echo $active;} ?>>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <br/>
                                     <select name="to_{{$lady->id}}_{{$date}}" id="to_{{$lady->id}}_{{$date}}">
                                         <option value="1">01:00</option>
