@@ -63,7 +63,7 @@ class LadiesController extends Controller
                 $image->name = $filename;
                 $image->order = 1;
                 if($image->save()){
-                    return true;
+                    return response()->json("success");
                 }
             }
         }
