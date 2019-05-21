@@ -73,7 +73,7 @@
                             <?php } ?>
                             @foreach($dates as $date)
                                 <td>
-                                    <select name="form-{{$lady->id}}-{{$date}}" id="">
+                                    <select name="from-{{$lady->id}}-{{$date}}" id="from-{{$lady->id}}-{{$date}}">
                                         <option value="1">01:00</option>
                                         <option value="2">02:00</option>
                                         <option value="3">03:00</option>
@@ -99,9 +99,9 @@
                                         <option value="23">23:00</option>
                                         <option value="24">24:00</option>
                                     </select> <br/>
-                                    <input type="checkbox" name="check-{{$lady->id}}-{{$date}}">
+                                    <input type="checkbox" name="check-{{$lady->id}}-{{$date}}" value="{{$lady->id}}-{{$date}}">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <br/>
-                                    <select name="to-{{$lady->id}}-{{$date}}" id="">
+                                    <select name="to-{{$lady->id}}-{{$date}}" id="to-{{$lady->id}}-{{$date}}">
                                         <option value="1">01:00</option>
                                         <option value="2">02:00</option>
                                         <option value="3">03:00</option>
@@ -135,8 +135,25 @@
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-primary save">Save</button>
+        <button class="btn btn-primary save" id="schedsavebutt">Save</button>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("button").click(function(){
+                var to = [];
+                var from = [];
+                $("input:checkbox:checked").each(function(){
+                    var checkval = $(this).val();
+                    var t = $("#to-"+checkval).val();
+                    var f = $("#from-"+checkval).val();
+                    to.push(t);
+                    from.push(f);
+                });
+                console.log(to);
+                console.log(from);
+            });
+        });
+    </script>
 </div>
 
 @stop
