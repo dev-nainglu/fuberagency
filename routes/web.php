@@ -11,27 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.main');
-});
+Route::get('/', 'LadiesController@index');
 
 Route::group(['prefix' => 'schedules'], function(){
     Route::get('/', 'SchedulesController@index');
-    Route::get('/data', 'SchedulesController@getData');
 });
 
 Route::group(['prefix' => 'ladyschedules'], function(){
     Route::get('/', 'LadySchedulesController@index');
-    Route::get('/data', 'LadySchedulesController@getData');
+    Route::post('/save', 'LadySchedulesController@saveSched');
 });
 
 Route::group(['prefix' => 'ladies'], function(){
-    Route::resource('/', 'LadiesController');
+    Route::get('/', 'LadiesController@index');
+    Route::post('/', 'LadiesController@store');
+    Route::post('/update', 'LadiesController@update');
     Route::get('/new', 'LadiesController@new');
+    Route::get('/{id}/edit', 'LadiesController@edit');
     Route::get('/{id}/images', 'LadiesController@getImages');
     Route::post('/images', ['as'=>'image.upload','uses'=> 'LadiesController@storeImages']);
     Route::post('/{id}/images/{image_id}/delete', 'LadiesController@deleteImages');
 });
-
-Route::resource('task', 'SchedulesController');
-Route::resource('link', 'LinkController');

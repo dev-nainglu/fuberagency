@@ -34,6 +34,20 @@ class LadiesController extends Controller
         }
     }
 
+    public function update(Request $request){
+        $lady =  Lady::find($request->id);
+        $lady->name = $request->name;
+        $lady->age = $request->age;
+        $lady->height = $request->height;
+        $lady->bwh = $request->bwh;
+        $lady->blog_url = $request->blogurl;
+        $lady->price = $request->price;
+        $lady->about = $request->about;
+        if($lady->save()){
+            return redirect('ladies');
+        }
+    }
+
     public function getImages($id){
         $images = Image::where("imageable_type", "App\Lady")->where("imageable_id", $id)->orderBy("order")->get();
         return view('ladies/images')->with([
@@ -67,5 +81,10 @@ class LadiesController extends Controller
                 }
             }
         }
+    }
+    
+    public function edit($id){
+        $lady = Lady::find($id);
+        return view('ladies.new')->with("lady", $lady);
     }
 }

@@ -53,14 +53,13 @@
         border-bottom: 1px solid #d6def7;
         height: 65px;
     }
+    .schedblock.active{
+        background: red;
+    }
 </style>
 <!-- main -->
 <div class="col-xl-12 col-lg-12">
     <div class="card shadow mb-4">
-        <!-- Card Header - Dropdown -->
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Schedules</h6>
-        </div>
         <!-- Card Body -->
         <div class="card-body row" style="min-height: 600px;">
             <div class="girls-part schedules col-xl-2 col-lg-2">
@@ -90,7 +89,21 @@
                                 <p>{{$i}}:00</p>
                             <?php } ?>
                             @foreach($ladies as $lady)
-                                <div class="schedblock" id="g{{$lady->id}}-t"></div>
+                                <?php 
+                                    $active = [];
+                                    foreach($lady->schedules as $schedule){
+                                        if($schedule->at_date == $today){
+                                            if($i == $schedule->time_to || $i == $schedule->time_from){
+                                                array_push($active, "active");
+                                            }else{
+                                                array_push($active, "non");
+                                            }
+                                        }else{
+                                            array_push($active, "non");
+                                        }
+                                    }
+                                ?>
+                                <div class="schedblock <?php print_r($active);?>" id="g{{$lady->id}}-t"></div>
                             @endforeach
                         </div>
                     @endfor

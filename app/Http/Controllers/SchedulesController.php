@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\Link;
 use App\Lady;
+use Carbon\Carbon;
 
 class SchedulesController extends Controller
 {
@@ -16,63 +17,14 @@ class SchedulesController extends Controller
         ->with(['images' => function($query){
             $query->select('id', 'name', 'path', 'imageable_id', 'imageable_type');
         }])->with('schedules')->paginate(10);
+        $today = Carbon::now()->toDateString();
         return view('schedule.main')->with([
-            'ladies' => $ladies
+            'ladies' => $ladies,
+            'today' => $today
         ]);
     }
 
-    public function getData(){
-        $tasks = new Task();
-        $links = new Link();
- 
-        return response()->json([
-            "data" => $tasks->all(),
-            "links" => $links->all()
-        ]);
-    }
 
-    public function store(Request $request){
- 
-        $task = new Task();
- 
-        $task->text = $request->text;
-        $task->start_date = $request->start_date;
-        $task->duration = $request->duration;
-        $task->progress = $request->has("progress") ? $request->progress : 0;
-        $task->parent = $request->parent;
- 
-        $task->save();
- 
-        return response()->json([
-            "action"=> "inserted",
-            "tid" => $task->id
-        ]);
-    }
- 
-    public function update($id, Request $request){
-        $task = Task::find($id);
- 
-        $task->text = $request->text;
-        $task->start_date = $request->start_date;
-        $task->duration = $request->duration;
-        $task->progress = $request->has("progress") ? $request->progress : 0;
-        $task->parent = $request->parent;
- 
-        $task->save();
- 
-        return response()->json([
-            "action"=> "updated"
-        ]);
-    }
- 
-    public function destroy($id){
-        $task = Task::find($id);
-        $task->delete();
- 
-        return response()->json([
-            "action"=> "deleted"
-        ]);
-    }
 
     
 }

@@ -43,9 +43,6 @@
 </style>
 <div class="col-xl-12 col-lg-12">
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Schedules</h6>
-        </div>
         <div class="card-body">
             <table>
                 <thead>
@@ -72,8 +69,17 @@
                                 <td><img src="#" alt="" class="lady-img"></td>
                             <?php } ?>
                             @foreach($dates as $date)
+                                <?php 
+                                    foreach($lady->schedules as $schedule){
+                                        if($schedule->at_date == $date){
+                                            $active = 'checked';
+                                        }else{
+                                            $active = "";
+                                        }
+                                    }
+                                ?>
                                 <td>
-                                    <select name="from-{{$lady->id}}-{{$date}}" id="from-{{$lady->id}}-{{$date}}">
+                                    <select name="from_{{$lady->id}}_{{$date}}" id="from_{{$lady->id}}_{{$date}}">
                                         <option value="1">01:00</option>
                                         <option value="2">02:00</option>
                                         <option value="3">03:00</option>
@@ -99,9 +105,9 @@
                                         <option value="23">23:00</option>
                                         <option value="24">24:00</option>
                                     </select> <br/>
-                                    <input type="checkbox" name="check-{{$lady->id}}-{{$date}}" value="{{$lady->id}}-{{$date}}">
+                                    <input type="checkbox" name="check_{{$lady->id}}_{{$date}}" value="{{$lady->id}}_{{$date}}" <?php echo $active; ?>>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <br/>
-                                    <select name="to-{{$lady->id}}-{{$date}}" id="to-{{$lady->id}}-{{$date}}">
+                                    <select name="to_{{$lady->id}}_{{$date}}" id="to_{{$lady->id}}_{{$date}}">
                                         <option value="1">01:00</option>
                                         <option value="2">02:00</option>
                                         <option value="3">03:00</option>
@@ -144,13 +150,27 @@
                 var from = [];
                 $("input:checkbox:checked").each(function(){
                     var checkval = $(this).val();
-                    var t = $("#to-"+checkval).val();
-                    var f = $("#from-"+checkval).val();
-                    to.push(t);
-                    from.push(f);
+                    var t = $("#to_"+checkval).val();
+                    var f = $("#from_"+checkval).val();
+                    to.push(checkval+"_"+t);
+                    from.push(checkval+"_"+f);
                 });
-                console.log(to);
-                console.log(from);
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "ladyschedules/save",
+                    method: 'post',
+                    data: {
+                        to: to,
+                        from: from
+                    },
+                    success: function(data){
+                        if(data == "success"){
+                            location.reload();
+                        }
+                    }
+                });
             });
         });
     </script>

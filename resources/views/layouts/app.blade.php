@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>{{ config('app.name', 'Fuber Agency') }}</title>
 
@@ -15,6 +16,7 @@
   <link href="{{ asset('css/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('js/jquery/jquery-ui.js') }}"></script>
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
@@ -33,43 +35,26 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-text mx-3">Fuber <sup>Agency</sup></div>
-      </a>
+        <p class="sidebar-brand-text mx-3" style="padding:5px; color: white; font-size: 12px;">店名:どっちパイもみ</p>
+        <p class="sidebar-brand-text mx-3" style="padding:5px; color: white; font-size: 12px;">アカウント残高：134500 円</p>
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="/">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        sections
-      </div>
-
       <!-- Nav Item - Tables -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="{{ url('/schedules') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Schedules</span></a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" href="{{ url('/ladies') }}">
           <i class="fas fa-fw fa-user"></i>
-          <span>Ladies</span></a>
+          <span>キャスト登録</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url('/ladyschedules') }}">
           <i class="fas fa-fw fa-list"></i>
-          <span>Lady Schedules</span></a>
+          <span>出勤登録</span></a>
       </li>
 
       <!-- Divider -->
@@ -91,7 +76,7 @@
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+          <h3>Fuber Agency</h3>
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Lady;
 use Carbon\Carbon;
+use App\LadySchedule;
 
 class LadySchedulesController extends Controller
 {
@@ -29,5 +30,51 @@ class LadySchedulesController extends Controller
             'dates' => $dates,
             'today' => $today
         ]);
+    }
+
+    public function saveSched(Request $request){
+        $tos = $request->to;
+        $froms = $request->from;
+        foreach($tos as $to){
+            $exp = explode("_", $to);
+            $ladyid = $exp[0];
+            $date = $exp[1];
+            $time_to = $exp[2];
+            $ladyschedtorow = LadySchedule::where("lady_id", $ladyid)->where("at_date", $date)->get();
+            if(count($ladyschedtorow) > 0){
+                $ladyschedrowtoupdate = LadySchedule::where("lady_id", $ladyid)->where("at_date", $date)->first();
+                $ladyschedrowtoupdate->lady_id = $ladyid;
+                $ladyschedrowtoupdate->time_to = $time_to;
+                $ladyschedrowtoupdate->at_date = $date;
+                $ladyschedrowtoupdate->save();
+            }else{
+                $ladyschedto = new LadySchedule();
+                $ladyschedto->lady_id = $ladyid;
+                $ladyschedto->time_to = $time_to;
+                $ladyschedto->at_date = $date;
+                $ladyschedto->save();
+            }
+        }
+        foreach($froms as $from){
+            $expfrom = explode("_", $from);
+            $ladyid = $expfrom[0];
+            $date = $expfrom[1];
+            $time_from = $expfrom[2];
+            $ladyschedfromrow = LadySchedule::where("lady_id", $ladyid)->where("at_date", $date)->get();
+            if(count($ladyschedfromrow) > 0){
+                $ladyschedrowfromupdate = LadySchedule::where("lady_id", $ladyid)->where("at_date", $date)->first();
+                $ladyschedrowfromupdate->lady_id = $ladyid;
+                $ladyschedrowfromupdate->time_from = $time_from;
+                $ladyschedrowfromupdate->at_date = $date;
+                $ladyschedrowfromupdate->save();
+            }else{
+                $ladyschedfrom = new LadySchedule();
+                $ladyschedfrom->lady_id = $ladyid;
+                $ladyschedfrom->time_from = $time_from;
+                $ladyschedfrom->at_date = $date;
+                $ladyschedfrom->save();
+            }
+        }
+        return "success";
     }
 }

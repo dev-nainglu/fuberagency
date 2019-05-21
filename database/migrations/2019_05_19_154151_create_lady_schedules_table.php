@@ -16,8 +16,8 @@ class CreateLadySchedulesTable extends Migration
         Schema::create('lady_schedules', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('lady_id');
-            $table->string('time_from');
-            $table->string('time_to');
+            $table->string('time_from')->nullable();
+            $table->string('time_to')->nullable();
             $table->date('at_date');
             $table->timestamps();
         });
